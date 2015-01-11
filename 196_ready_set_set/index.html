@@ -6,10 +6,10 @@ function set(arr) {
   // HELPER - TRIM OUT DUPLICATES
   //===========================================
 
-  trimDupes = function(){
+  function trimDupes(targetSet){
 
     var newArray=[];
-    newArray.push(set[0]);
+    newArray.push(targetSet[0]);
 
     function isDuplicated(a){
       var count = 0;
@@ -23,15 +23,28 @@ function set(arr) {
     }
 
     //for each in arr, push into newArray if not duplicate
-    for(var i=0; i<set.length; i++){
-      if( isDuplicated(set[i]) == false ){
-        newArray.push(set[i]);
+    for(var i=0; i<targetSet.length; i++){
+      if( isDuplicated(targetSet[i]) == false ){
+        newArray.push(targetSet[i]);
       }
     }
     return(newArray);
   }
 
-  set = trimDupes();
+  set = trimDupes(set);
+
+  //===========================================
+  // HELPER - COPY ARRAY BY VALUE
+  //===========================================
+  function arrayCopy(arr){
+    var newArray = [];
+    for(var i=0; i<arr.length; i++){
+      if(typeof arr[i] !== 'function' ){
+        newArray.push(arr[i]);
+      }
+    }
+    return newArray;
+  }
 
 
   //===========================================
@@ -39,11 +52,12 @@ function set(arr) {
   //===========================================
 
   set.union = function(otherArr) {
+    var firstArr = arrayCopy(this); //make a copy so it doesn't change "this"
     for(var i=0; i<otherArr.length; i++){
-        this.push(otherArr[i]);
+        firstArr.push(otherArr[i]);
     }
-    this.trimDupes();
-    return this.arr
+    firstArr = trimDupes(firstArr);
+    return firstArr;
   }
 
   //===========================================
@@ -51,23 +65,21 @@ function set(arr) {
   //===========================================
 
   set.intersect = function(otherArr) {
+    var firstArr = this;
     var newArray=[];
     for(var i=0; i<otherArr.length; i++){
       for(var s=0; s<this.length; s++){
-        console.log(otherArr[i]);
-        console.log(this[s]);
         if(otherArr[i] == this[s]){
-          console.log('match');
           newArray.push(this[s]);
         }
-        console.log('-----');
       }
     }
-    console.log(this);
-    this.trimDupes();
-    console.log(newArray);
+    return newArray;
   }
 
+  
+
+  //return entire object
   return set;
 } 
 
