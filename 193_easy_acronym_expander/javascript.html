@@ -23,13 +23,12 @@ A.vars = {
 }
 
 A.checkWithSuffix = function(a,b){
-  
+
   for(var i = 1; i < A.vars.suffixDepth + 1; i++){
     
     (function(){
-      var t = i;
-      var withoutLastLetter = a.substring(0, a.length - t);
-      var lastLetter =  a.slice(-t);
+      var withoutLastLetter = a.substring(0, a.length - i);
+      var lastLetter =  a.slice(-i);
 
       if ( a == b ){
         A.vars.check = A.acronyms[a];
