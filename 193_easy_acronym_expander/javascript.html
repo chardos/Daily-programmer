@@ -17,18 +17,35 @@ A.acronyms = {
   imo: 'in my opinion'
 }
 
-A.checkWithSuffix = function(a,b){
-  var withoutLastLetter = a.substring(0, a.length - 1);
-  var lastLetter =  a.slice(-1);
+A.vars = {
+  suffixDepth: 3,
+  check: false
+}
 
-  if ( a == b ){
-    return A.acronyms[a];
-  }
-  else if ( withoutLastLetter == b ){
-    return A.acronyms[withoutLastLetter] + lastLetter;
-  }
-  else{
-    return false;
+A.checkWithSuffix = function(a,b){
+  
+  for(var i = 1; i < A.vars.suffixDepth + 1; i++){
+    
+    (function(){
+      var t = i;
+      var withoutLastLetter = a.substring(0, a.length - t);
+      var lastLetter =  a.slice(-t);
+
+      if ( a == b ){
+        A.vars.check = A.acronyms[a];
+      }
+      else if ( withoutLastLetter == b ){
+        A.vars.check =  A.acronyms[withoutLastLetter] + lastLetter;
+      }
+      else{
+        A.vars.check =  false;
+      }
+    }());
+
+    //if found the a match, break the loop
+    if(A.vars.check != false){
+      break;
+    }
   }
 }
 
@@ -41,8 +58,9 @@ A.expand = function(sentence) {
     for (var key in A.acronyms) {
       if (A.acronyms.hasOwnProperty(key)) { //check to make sure not prototype properties
         var check = A.checkWithSuffix(arr[i],key);
-        if ( check != false ){
-          arr[i] = check;
+        if ( A.vars.check != false ){
+          arr[i] = A.vars.check;
+          A.vars.check = false;
         }
       }
     }
@@ -52,7 +70,8 @@ A.expand = function(sentence) {
 
 
 console.log( A.expand('hey lol, wtf is that') ); 
-console.log( A.expand('gl! hf!') ); 
+console.log( A.expand('g2g, wp!') ); 
+console.log( A.expand('gl!!! hf!') ); 
 
 
 </script>
