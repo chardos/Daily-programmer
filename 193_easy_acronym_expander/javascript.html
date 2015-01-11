@@ -17,29 +17,42 @@ A.acronyms = {
   imo: 'in my opinion'
 }
 
-A.expand = function(sentence) {
+A.checkWithSuffix = function(a,b){
+  var withoutLastLetter = a.substring(0, a.length - 1);
+  var lastLetter =  a.slice(-1);
 
+  if ( a == b ){
+    return A.acronyms[a];
+  }
+  else if ( withoutLastLetter == b ){
+    return A.acronyms[withoutLastLetter] + lastLetter;
+  }
+  else{
+    return false;
+  }
+}
+
+A.expand = function(sentence) {
   //slice into words
   var arr = sentence.split(' ');
   //for each word in sentence
   for(var i = 0; i < arr.length; i++){
     //for each word in acronyms
     for (var key in A.acronyms) {
-      if (A.acronyms.hasOwnProperty(key)) {
-        if (key == arr[i]){
-          arr[i] = A.acronyms[key];
+      if (A.acronyms.hasOwnProperty(key)) { //check to make sure not prototype properties
+        var check = A.checkWithSuffix(arr[i],key);
+        if ( check != false ){
+          arr[i] = check;
         }
       }
     }
   }
-
   return arr.join(' ');
-
-  //if match, replace the acronym with the word
 }
 
 
-console.log( A.expand('hey lol wtf is that') ); 
+console.log( A.expand('hey lol, wtf is that') ); 
+console.log( A.expand('gl! hf!') ); 
 
 
 </script>
