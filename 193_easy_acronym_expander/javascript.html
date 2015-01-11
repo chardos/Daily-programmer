@@ -1,0 +1,47 @@
+<script>
+
+//http://www.reddit.com/r/dailyprogrammer/comments/2ptrmp/20141219_challenge_193_easy_acronym_expander/
+
+var A = {}
+
+A.acronyms = {
+  lol: 'laugh out loud',
+  dw: "don't worry",
+  hf: 'have fun',
+  gg: 'good game',
+  brb: 'be right back',
+  g2g: 'got to go',
+  wtf: 'what the fuck',
+  wp: 'well played',
+  gl: 'good luck',
+  imo: 'in my opinion'
+}
+
+A.expand = function(sentence) {
+
+  //slice into words
+  var arr = sentence.split(' ');
+  //for each word in sentence
+  for(var i = 0; i < arr.length; i++){
+    //for each word in acronyms
+    for (var key in A.acronyms) {
+      if (A.acronyms.hasOwnProperty(key)) {
+        if (key == arr[i]){
+          arr[i] = A.acronyms[key];
+        }
+      }
+    }
+  }
+
+  return arr.join(' ');
+
+  //if match, replace the acronym with the word
+}
+
+
+console.log( A.expand('hey lol wtf is that') ); 
+
+
+</script>
+
+
