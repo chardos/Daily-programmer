@@ -1,0 +1,82 @@
+<script>
+
+function set(arr) {
+  var set = arr;
+  //===========================================
+  // HELPER - TRIM OUT DUPLICATES
+  //===========================================
+
+  trimDupes = function(){
+
+    var newArray=[];
+    newArray.push(set[0]);
+
+    function isDuplicated(a){
+      var count = 0;
+      for(var i=0; i<newArray.length; i++){
+        if(a == newArray[i]){
+          count++;
+        }
+      }
+      if (count === 0){ return false; }
+      else{ return true;}
+    }
+
+    //for each in arr, push into newArray if not duplicate
+    for(var i=0; i<set.length; i++){
+      if( isDuplicated(set[i]) == false ){
+        newArray.push(set[i]);
+      }
+    }
+    return(newArray);
+  }
+
+  set = trimDupes();
+
+
+  //===========================================
+  // UNION METHOD
+  //===========================================
+
+  set.union = function(otherArr) {
+    for(var i=0; i<otherArr.length; i++){
+        this.push(otherArr[i]);
+    }
+    this.trimDupes();
+    return this.arr
+  }
+
+  //===========================================
+  // INTERSECTION METHOD
+  //===========================================
+
+  set.intersect = function(otherArr) {
+    var newArray=[];
+    for(var i=0; i<otherArr.length; i++){
+      for(var s=0; s<this.length; s++){
+        console.log(otherArr[i]);
+        console.log(this[s]);
+        if(otherArr[i] == this[s]){
+          console.log('match');
+          newArray.push(this[s]);
+        }
+        console.log('-----');
+      }
+    }
+    console.log(this);
+    this.trimDupes();
+    console.log(newArray);
+  }
+
+  return set;
+} 
+
+var arr1 = new set([-3,-3,2,4,1,7,7]);
+var arr2 = new set([4,4,1,5,6]);
+
+
+
+//feed into set
+</script>
+
+
