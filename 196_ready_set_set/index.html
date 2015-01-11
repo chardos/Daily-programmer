@@ -57,7 +57,7 @@ function set(arr) {
         firstArr.push(otherArr[i]);
     }
     firstArr = trimDupes(firstArr);
-    return firstArr;
+    return firstArr.sort();
   }
 
   //===========================================
@@ -74,10 +74,30 @@ function set(arr) {
         }
       }
     }
-    return newArray;
+    return newArray.sort();
   }
 
-  
+  //===========================================
+  // SUBTRACTION METHOD
+  //===========================================
+
+  set.subtract = function(otherArr) {
+    var firstArr = this;
+    var newArray=[];
+    var count = 0;
+    for(var i=0; i<firstArr.length; i++){
+      for(var s=0; s<otherArr.length; s++){
+        if(firstArr[i] == otherArr[s]){
+          count++;
+        }
+      }
+      if(count == 0){
+        newArray.push(firstArr[i])
+      }
+      count = 0;
+    }
+    return newArray;
+  }
 
   //return entire object
   return set;
@@ -85,7 +105,6 @@ function set(arr) {
 
 var arr1 = new set([-3,-3,2,4,1,7,7]);
 var arr2 = new set([4,4,1,5,6]);
-
 
 
 //feed into set
