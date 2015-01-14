@@ -3,7 +3,7 @@
 //http://www.reddit.com/r/dailyprogrammer/comments/2rnwzf/20150107_challenge_196_intermediate_rail_fence/
 // RAIL FENCE CYPHER
 
-function encode(plaintext){
+function encode(x){
   //line 1 = every 4th starting from 0
   //line 2 = every 2nd starting from 1
   //line 3 = every 4th starting from 2
@@ -11,27 +11,61 @@ function encode(plaintext){
   var line2=[];
   var line3=[];
 
-  for(var i=0;i<plaintext.length; i++){
+  for(var i=0;i<x.length; i++){
     if(i%4 == 0 ){
-      line1.push( plaintext[i] );
+      line1.push( x[i] );
     }
     else if ( i%2 == 1  ){
-      line2.push( plaintext[i] );
+      line2.push( x[i] );
     }
     else{
-      line3.push( plaintext[i] );
+      line3.push( x[i] );
     }
   }
   return line1.join('') + line2.join('') + line3.join('');
 }
 
-function decode(ciphertext){
+function decode(x){
+  var remainder = x.length%4;
+  var numOfBlocks =  (x.length-remainder) / 4  //a block is a grouping of 4
 
+  function addRemainderToLine(lineNumber){
+    if ( remainder >= lineNumber ){
+      return 1;
+    }
+    else{
+      return 0;
+    }
+  }
+
+  var line1length = numOfBlocks + addRemainderToLine(1);
+  var line2length = numOfBlocks * 2 + addRemainderToLine(2);
+  var line3length = numOfBlocks + addRemainderToLine(3);
+
+  var line1 = x.substring(0,line1length).split('');
+  var line2 = x.substring(line1length,line2length + line1length).split('');
+  var line3 = x.substring(line1length + line2length, line1length + line3length + line2length).split('');
+
+  var decoded = [];
+
+  for(var i=0;i<x.length; i++){
+    if(i%4 == 0 ){
+      decoded[i] = line1.shift();
+    }
+    else if ( i%2 == 1  ){
+      decoded[i] = line2.shift();
+    }
+    else{
+      decoded[i] = line3.shift();
+    }
+  }
+  return decoded.join('')
 }
 
+console.log( encode('JAVASCRIPT') );
+console.log( decode('JSPAACITVR') );
 console.log( encode('REDDITCOMRDAILYPROGRAMMER') );
-
-
+console.log( decode('RIMIRAREDTORALPORMEDCDYGM') );
 
 </script>
 
