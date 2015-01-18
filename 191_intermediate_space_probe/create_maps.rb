@@ -9,4 +9,8 @@ module Create_Maps
     end
   end
 
+  def create_heuristic_map
+    
+  end
+
 end
