@@ -1,3 +1,5 @@
+require_relative 'create_maps'
+
 class Map
   #attr_accessor:@arr1
 
@@ -13,14 +15,8 @@ class Map
     #puts @map[2][0]
   end
 
-  def create_map(n)
-    for y in 0..n-1 do
-      @map[y] = []
-      for x in 0..n-1 do
-        @map[y].push('.')
-      end
-    end
-  end
+  include Create_Maps
+
 
   def convert_1d_to_2d(pos, rows, spaces)
     puts "pos #{pos}"
@@ -39,7 +35,6 @@ class Map
     puts "--------"
 
     [y,x]
-
   end
 
   def surround_G_with_X(y, x)
@@ -104,8 +99,14 @@ class Map
         end
       end
     end
+  end
 
+  def create_heuristic_map
+    
+  end
 
+  def print_heuristic_map
+    
   end
 
   def print_map
@@ -123,6 +124,6 @@ class Map
 
 
 end
-
-map = Map.new(15)
+map = Map.new(5)
+map.create_map(3)
 
