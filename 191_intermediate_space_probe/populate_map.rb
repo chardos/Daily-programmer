@@ -1,43 +1,9 @@
-module Add_Obstacles
+module Populate_Map
 
-  def convert_1d_to_2d(pos, rows, spaces)
-    puts "pos #{pos}"
-    y = (pos/(rows*1.0)).ceil - 1
-    x = pos%rows
 
-    #reset back to index 0
-    if x === 0
-      x = rows -1
-    else
-      x -= 1
-    end
-
-    puts "y #{y}"
-    puts "x #{x}"
-    puts "--------"
-
-    [y,x]
-  end
-
-  def surround_G_with_X(y, x)
-    puts "y #{y} x #{x}"
-    (-1..1).each do |mod_x|
-      (-1..1).each do |mod_y|
-        modified_y = y + mod_y
-        modified_x = x + mod_x
-
-        puts "mod X #{modified_x}"
-        puts "mod Y #{modified_y}"
-
-        if modified_x >= 0 && modified_y >= 0 && modified_x < @n && modified_y < @n
-          current_position = @map[modified_y][modified_x]
-          if current_position != 'G' && current_position != 'A'
-            @map[modified_y][modified_x] = 'X'
-          end
-        end
-
-      end
-    end
+  def add_start_end_points(n )
+    @map[ @start_point[0] ][ @start_point[1] ] = 'S'
+    @map[ @end_point[0] ][ @end_point[1] ] = 'E'
   end
 
   def add_obstacles(n)
@@ -51,12 +17,20 @@ module Add_Obstacles
     #make an array of no_of_spaces
     ref_array = (1..no_of_spaces).to_a
 
+    #remove start + end from ref_array
+    start_point = convert_2d_to_1d( @start_point )
+    ref_array.delete(start_point)
+    end_point = convert_2d_to_1d( @end_point )
+    ref_array.delete(end_point)
+
+    puts ref_array
+
     #add asteroids
     (1..no_of_asteroids).each do 
       random = rand(ref_array.length) 
       ref_array_position = ref_array.delete_at(random)
-      puts "ref_array_position #{ref_array_position}"
-      array_positions = convert_1d_to_2d(ref_array_position, n, no_of_spaces)
+      #puts "ref_array_position #{ref_array_position}"
+      array_positions = convert_1d_to_2d(ref_array_position, n)
       @map[array_positions[0]][array_positions[1]] = 'A'
     end
 
@@ -64,8 +38,8 @@ module Add_Obstacles
     (1..no_of_gravity_wells).each do 
       random = rand(ref_array.length) 
       ref_array_position = ref_array.delete_at(random)
-      puts "ref_array_position #{ref_array_position}"
-      array_positions = convert_1d_to_2d(ref_array_position, n, no_of_spaces)
+      #puts "ref_array_position #{ref_array_position}"
+      array_positions = convert_1d_to_2d(ref_array_position, n)
       @map[array_positions[0]][array_positions[1]] = 'G'
     end
 
