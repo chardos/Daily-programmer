@@ -37,6 +37,9 @@ module Populate_Map
     #add gravity wells
     (1..no_of_gravity_wells).each do 
       random = rand(ref_array.length) 
+
+      #delete the 8spaces around start and end
+
       ref_array_position = ref_array.delete_at(random)
       #puts "ref_array_position #{ref_array_position}"
       array_positions = convert_1d_to_2d(ref_array_position, n)
@@ -50,7 +53,11 @@ module Populate_Map
         if current_position === 'G'
 
           #iterate all 8 points around it
-          surround_G_with_X(y_index, x_index)
+          surrounding_squares(y_index, x_index).each do |i|
+            @map[i[0]][i[1]] = 'X'
+            print i
+            puts ''
+          end
 
         end
       end

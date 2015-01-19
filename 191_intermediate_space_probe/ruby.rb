@@ -41,5 +41,5 @@ class Map
 
 end
 
-map = Map.new( 5, [0,1], [4,4] )
+map = Map.new( 10, [0,0], [4,4] )
 

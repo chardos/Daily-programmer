@@ -23,25 +23,34 @@ module Helpers
     pos[0] * @n + (pos[1] + 1)
   end
 
-  def surround_G_with_X(y, x)
+  def surrounding_squares(y, x)
     puts "y #{y} x #{x}"
+    result = []
+
     (-1..1).each do |mod_x|
       (-1..1).each do |mod_y|
         modified_y = y + mod_y
         modified_x = x + mod_x
-
         #puts "mod X #{modified_x}"
         #puts "mod Y #{modified_y}"
 
         if modified_x >= 0 && modified_y >= 0 && modified_x < @n && modified_y < @n
           current_position = @map[modified_y][modified_x]
-          if current_position != 'G' && current_position != 'A'
-            @map[modified_y][modified_x] = 'X'
+          if current_position != 'G'
+            result.push([modified_y, modified_x])
           end
         end
-
+        
       end
     end
+    return result
   end
 
 end
+
+
+=begin
+if current_position != 'G' && current_position != 'A'
+  @map[modified_y][modified_x] = 'X'
+end
+=end
