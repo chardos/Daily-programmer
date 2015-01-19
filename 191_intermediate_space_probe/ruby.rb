@@ -1,6 +1,6 @@
+require_relative 'helpers'
 require_relative 'create_maps'
 require_relative 'populate_map'
-require_relative 'helpers'
 
 class Map
 
@@ -16,7 +16,6 @@ class Map
     add_obstacles(n)
     print_map
 
-    #puts @map[2][0]
   end
 
   include Helpers
@@ -41,5 +40,5 @@ class Map
 
 end
 
-map = Map.new( 10, [0,0], [4,4] )
+map = Map.new( 5, [0,0], [4,4] )
 

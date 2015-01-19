@@ -24,7 +24,6 @@ module Helpers
   end
 
   def surrounding_squares(y, x)
-    puts "y #{y} x #{x}"
     result = []
 
     (-1..1).each do |mod_x|
@@ -35,12 +34,11 @@ module Helpers
         #puts "mod Y #{modified_y}"
 
         if modified_x >= 0 && modified_y >= 0 && modified_x < @n && modified_y < @n
-          current_position = @map[modified_y][modified_x]
-          if current_position != 'G'
+          unless y == modified_y && x == modified_x
             result.push([modified_y, modified_x])
           end
         end
-        
+
       end
     end
     return result

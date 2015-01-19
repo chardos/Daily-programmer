@@ -1,7 +1,7 @@
 module Populate_Map
 
 
-  def add_start_end_points(n )
+  def add_start_end_points(n)
     @map[ @start_point[0] ][ @start_point[1] ] = 'S'
     @map[ @end_point[0] ][ @end_point[1] ] = 'E'
   end
@@ -23,8 +23,6 @@ module Populate_Map
     end_point = convert_2d_to_1d( @end_point )
     ref_array.delete(end_point)
 
-    puts ref_array
-
     #add asteroids
     (1..no_of_asteroids).each do 
       random = rand(ref_array.length) 
@@ -34,11 +32,21 @@ module Populate_Map
       @map[array_positions[0]][array_positions[1]] = 'A'
     end
 
+    #delete the 8 spaces around start and end, so no gravity well spawns adjacent to them
+    surrounding_squares(@start_point[0],@start_point[1]).each do |i|
+      a = convert_2d_to_1d([i[0],i[1]])
+      ref_array.delete(a)
+    end
+    surrounding_squares(@end_point[0],@end_point[1]).each do |i|
+      a = convert_2d_to_1d([i[0],i[1]])
+      ref_array.delete(a)
+    end
+
     #add gravity wells
     (1..no_of_gravity_wells).each do 
       random = rand(ref_array.length) 
 
-      #delete the 8spaces around start and end
+
 
       ref_array_position = ref_array.delete_at(random)
       #puts "ref_array_position #{ref_array_position}"
@@ -54,9 +62,10 @@ module Populate_Map
 
           #iterate all 8 points around it
           surrounding_squares(y_index, x_index).each do |i|
-            @map[i[0]][i[1]] = 'X'
-            print i
-            puts ''
+            surrounding_position = @map[i[0]][i[1]]
+            if surrounding_position != 'G' && surrounding_position != 'A'
+              @map[i[0]][i[1]] = 'X'
+            end
           end
 
         end
