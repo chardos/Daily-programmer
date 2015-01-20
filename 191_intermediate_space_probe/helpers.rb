@@ -18,6 +18,8 @@ module Helpers
     [y,x]
   end
 
+
+
   #1d position is index 1
   def convert_2d_to_1d(pos)
     pos[0] * @n + (pos[1] + 1)
@@ -42,6 +44,13 @@ module Helpers
       end
     end
     return result
+  end
+
+  def get_heuristic_value(y,x)
+    #how fars it from the end
+    y_diff = (y - @end_point[0]).abs
+    x_diff = (x - @end_point[1]).abs
+    return y_diff + x_diff
   end
 
 end
