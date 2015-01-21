@@ -10,11 +10,13 @@ class Map
     @start_point = start_point
     @end_point = end_point
     @map = []
-    @heuristic_map = []
+    @h_score_map = []
+    @f_score_map = []
     @no_of_asteroids = 0.2
     @no_of_gravity_wells = 0.05
     create_map
-    create_heuristic_map
+    create_h_score_map
+    create_f_score_map
     add_start_end_points(n)
     add_obstacles(n)
     print_map
@@ -31,7 +33,7 @@ class Map
   include Find_Path
 
   def print_heuristic_map
-    @heuristic_map.each do |y|
+    @h_score_map.each do |y|
       y.each do |x|
         print "#{x}  "
       end

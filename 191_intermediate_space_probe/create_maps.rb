@@ -9,12 +9,21 @@ module Create_Maps
     end
   end
 
-  def create_heuristic_map
+  def create_h_score_map
     for y in 0..@n-1 do
-      @heuristic_map[y] = []
+      @h_score_map[y] = []
       for x in 0..@n-1 do
         heuristic = get_heuristic_value(y,x)
-        @heuristic_map[y].push(heuristic)
+        @h_score_map[y].push(heuristic)
+      end
+    end
+  end
+
+  def create_f_score_map
+    for y in 0..@n-1 do
+      @f_score_map[y] = []
+      for x in 0..@n-1 do
+        @f_score_map[y].push('.')
       end
     end
   end
